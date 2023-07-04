@@ -1,0 +1,127 @@
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- font awesome link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <section class="container">
+        <h1 align="center">Raw Material Creation</h1>
+
+        <!-- form to create Rawmaterail -->
+            <form action="/rawmaterial/create-rawmaterial" method="POST">
+
+
+            <table class="table">
+                <thead>
+                    <tr  class="table-active">
+                        <th>Material ID/code </th>
+                        <th>Raw/Material Name </th>
+                        <th> Raw/Material Type</th>
+                        <th>Current Cost(per kg)</th>
+                        <th>Vendor/Supplier Information</th>
+                        <th>Inventory_level </th>
+                        
+                        <th>Add Raw Material</th>
+                        <th>Create New Receipe</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" name="Material" placeholder="Material Name/code" required></td>
+                  
+                        <td><input type="text" name="Materialname" placeholder="Material Name/code" required></td>
+
+                        <td>
+                            <input type="text" name="Materialtype" placeholder="Materialtype" required></td>
+                        <td><input type="number" name="current_cost" placeholder="current_cost" required></td>
+                    </td>
++
+                      <td><input type="text" name="vendor_information" placeholder="vendor_information" required></td>
+                      <td><input type="text" name="inventory_level" placeholder="inventory_level" required></td>
+                        <td><input type="submit" class="btn btn-success" id="add" value="ADD ITEMS"></td>
+                        <td>
+                            <div >
+                                <a href="/todotask" class="btn btn-primary"
+                                    onmouseover="this.style.backgroundColor='#08b510'; this.style.transform='scale(1.1)';"
+                                    onmouseout="this.style.backgroundColor='#007bff'; this.style.transform='scale(1)';">
+                                    Create Recipe
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </section>
+
+    <div>
+        <h1 align="center">Raw Material List</h1>
+
+        <form action="/rawmaterial/delete-rawmaterial" method="GET">
+            
+            <input type="hidden" name="_method" value="DELETE">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>Material ID/code </th>
+                        <th>Material Name </th>
+                        <th> Material Type</th>
+                        <th>Current Cost(per kg)</th>
+                        <th>Vendor/Supplier Information</th>
+                        <th>Inventory_level </th>
+                         <th>Update</th>
+                        <th></th>
+                         </tr>
+                </thead>
+                <tbody>
+                    <% for(let i of rawtasks) { %>
+                        <tr>
+                            <td><input type="checkbox" name="rawMaterialId" value="<%= i._id %>"></td>
+                            <td><p id="rawtasks-Material"><%= i.Material %></p></td>
+                            <td><p id="rawtasks-Materialname"><%= i.Materialname %></p></td>
+                            <td><p id="rawtasks-Materialtype"><%= i.Materialtype %></p></td>
+                            <td><p id="rawtasks-current_cost"><%= i.current_cost %></p></td>
+                            <td><p id="rawtasks-vendor_information"><%= i.vendor_information %></p></td>
+                            <td><p id="rawtasks-inventory_level"><%= i.inventory_level %></p></td>
+                          
+                            <td>
+                                    <form action="/rawmaterial/update-rawmaterial/<%= i._id %>" method="POST">
+ 
+                                    <input type="hidden" name="_method" value="PUT">
+                                
+                                    <input type="text" name="Material" value="<%= i.Material %>">
+                                    <input type="text" name ="Materialname" value="<%=i.Materialname %>">
+                                    <input type="text" name="Materialtype" value="<%= i.Materialtype %>">
+                                    <input type="number" name="current_cost" value="<%= i.current_cost %>">
+                                    <input type="text" name="vendor_information" value="<%= i.vendor_information %>">
+                                    <input type="text" name="inventory_level" value="<%= i.inventory_level %>">
+                                   
+                                    <div class="update-button-container">
+                                        <input type="submit" class="btn btn-primary" value="Update">
+                                    </div> </form>
+                                
+                            </td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+            <div align="center">
+                <input type="submit" class="btn btn-danger" value="Delete Items">
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

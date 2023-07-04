@@ -1,0 +1,108 @@
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <!-- font awesome link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+    <link rel="stylesheet" href="./css/style.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+</head>
+<style>
+   .scroll-container {
+    max-height: 300px; /* Set the desired height for the scrollable area */
+    overflow-y: auto; /* Enable vertical scrolling */
+    border: 3px solid #ccc; /* Add a border for visual separation (optional) */
+    padding: 10px; /* Add some padding for better readability (optional) */
+    width:fit-content;
+  }
+  .scroll-container label {
+    border-bottom: 5px solid #ccc; /* Add a line separator at the bottom of each label */
+    padding-bottom: 10px; /* Add some spacing between the labels (optional) */
+  }
+
+  /* Style for the checkboxes */
+  .scroll-container input[type="checkbox"] {
+    margin-right: 5px;
+  }
+
+</style>
+<body>
+  <!-- Sidebar -->
+  <div class="w3-sidebar w3-light-grey w3-bar-block" style="width: 15%; margin-top: 5px;">
+    <h3 class="w3-bar-item">Plastic Manufacturing</h3> 
+    <a href="/rawmaterial" class="w3-bar-item w3-button" style="margin-bottom: 20px; text-decoration: none; font-size: large; ">Add New Raw Material</a>
+    <a href="/todotask" class="w3-bar-item w3-button" style="margin-bottom: 20px;text-decoration: none; font-size: large;">Create New Recipe</a>
+    <a href="/raw" class="w3-bar-item w3-button" style="margin-bottom: 80px;text-decoration: none; font-size: large;">See Created Recipe</a>
+  </div>
+    <div style="text-align: center; padding: 50px;  ">
+        <button id="toggleForm" class="btn btn-primary"
+            onmouseover="this.style.backgroundColor='#08b510'; this.style.transform='scale(1.1)';"
+            onmouseout="this.style.backgroundColor='#007bff'; this.style.transform='scale(1)';"
+            onclick="toggleForm();">Create New Recipe</button>
+    </div>
+    <section id="formSection" class="container" style="display: none;">
+        <h1 align="center">Recipe Creation</h1>
+        <!-- form to create task -->
+        <form action="/create-task" method="POST">
+            <table class="table">
+                <thead>
+                    <tr class="table-active">
+                        <th>Product Name/Code</th>
+                        <th>Product Category/Fetching raw Material</th>
+                        <th>Add</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" name="description" placeholder="Product Name/Code" required></td>
+                        <td>
+                            <div class="scroll-container">
+                              <% rawMaterials.forEach((rawMaterial) => { %>
+                                <label>
+                                  <input type="checkbox" name="rawMaterialIds[]" value="<%= rawMaterial._id %>">
+                                  <strong><i>Materialname-:<%= rawMaterial.Materialname %><br></i></strong>
+                                  <strong><i>Material Current Cost <%= rawMaterial.current_cost %>.rs/kg<br></i></strong>
+                                  <strong><i>Vendor Name <%= rawMaterial.vendor_information %> </i></strong>
+                                <br>
+                                  <strong>Quantity:</strong>
+                                  <input type="number" step="0.01" id="Quantity" name="quantities[]" placeholder="Quantity">
+                                </label>
+
+                                <br>
+                              <% }); %>
+                            </div>
+                          </td>
+                             
+                        <td><input type="submit" class="btn btn-success" id="add" value="Add New Receipe"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </section>
+    <td>  
+    </td>
+    
+    <script>
+        const toggleFormButton = document.getElementById('toggleForm');
+        const formSection = document.getElementById('formSection');
+
+        toggleFormButton.addEventListener('click', function() {
+            if (formSection.style.display === 'none') {
+                formSection.style.display = 'block';
+                toggleFormButton.innerText = 'Close Form';
+            } else {
+                formSection.style.display = 'none';
+                toggleFormButton.innerText = 'Create New Recipe';
+            }
+        });
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbwhIcB5f5O5/8xvI890U6aw5K4Uar5+g827wn6"
+            crossorigin="anonymous"></script>
+</body>
+</html>
